@@ -5,7 +5,6 @@ from .calculate import calculate, CalculationError
 def main():
     HOST = ''
     PORT = 9010
-    clients = []
 
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -13,17 +12,15 @@ def main():
             print('\nServer started.')
             while True:
                 s.listen(1)
-                client = s.accept()
-                clients.append(client)
-                with client in clients:
-                    conn, addr = client
+                conn, addr = s.accept()
+                with conn:
                     print('\nConnected by ', addr)
                     while True:
                         data = conn.recv(1024)
                         if not data:
                             break
                         expression = str(data)[2:][:-1]
-                        print('\nReceived expression: ', expression)
+                        print('Received expression: ', expression)
                         try:
                             result = str(calculate(expression))
                         except CalculationError as e:

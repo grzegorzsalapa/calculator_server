@@ -3,4 +3,5 @@ venv_serv
 .idea
 __pycache__
 dist
-
+pyproject.toml
+LICENSE
